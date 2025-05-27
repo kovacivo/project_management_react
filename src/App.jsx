@@ -1,7 +1,17 @@
+import ProjectBody from "./ProjectBody";
+import ProjectMenu from "./ProjectMenu";
+
 function App() {
   return (
     <>
-      <h1 className="my-8 text-center text-5xl font-bold">Hello World</h1>
+    <div className="h-11 bg-slate-50"></div>
+      <div className="flex gap-12">
+        
+        <ProjectMenu />
+        
+        <ProjectBody />
+      </div>
+
     </>
   );
 }
