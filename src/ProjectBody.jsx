@@ -1,19 +1,38 @@
 import logo from './assets/no-projects.png';
-import { useState } from 'react';
+import { useState, useImperativeHandle } from 'react';
 
 
 
 
 
-export default function ProjectBody({ project }) {
+export default function ProjectBody({ project, projects, onSubmit, ref }) {
 
+  const [title,setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
+
+  console.log("ProjectBody rendered...");
+  console.log("currently {} projects there...", projects.length);
+
+   const handleFormSubmit = () => {
+    if (title && description && date) {
+      console.log("data is set to: {}, {} and {}", title, description, date);
+      onSubmit({ title, description, date });
+    } else {
+      alert('Please fill in all fields!');
+    }
+  };
+
+   const resetForm = () => {
+    setTitle('');
+    setDescription('');
+    setDate('');
+    alert('Form has been reset!');
+  };
+  
   function handleCreateProject() {
     console.log("Pressing button to create new project...");
     setClickedNewProject(true);
-  }
-
-  function handleSaveButton(){
-    console.log("Pressing button to save project data...");
   }
 
   const [clickedNewProject, setClickedNewProject] = useState(false);
@@ -21,25 +40,27 @@ export default function ProjectBody({ project }) {
   let contentToDisplay = null;
 
   if (project != null) {
-    contentToDisplay = <><p>project content</p><p>{project.name}</p></>;
+    contentToDisplay = <><p>project content</p><p>{project.title}</p></>;
   } else if (clickedNewProject === true) {
     contentToDisplay = <>
       <div className="justify-self-end mr-64">
-        <button className="text-stone-800 hover:bg-stone-800 hover:text-slate-50 rounded-lg text-xl p-4">Cancel</button>
+        <button className="text-stone-800 hover:bg-stone-800 hover:text-slate-50 rounded-lg text-xl p-4"
+          onClick={resetForm}>
+          Cancel
+        </button>
         <button
           className="text-stone-800 hover:bg-stone-800 hover:text-slate-50 rounded-lg text-xl p-4"
-          onClick={handleSaveButton}
-        >
+          onClick={handleFormSubmit}>
           Save
         </button>
       </div>
       <div className="flex flex-col mr-64">
         <label className="font-bold text-stone-600 pt-5">TITLE</label>
-        <input className="bg-stone-300 pt-2 pb-2 rounded-sm text-lg" type="text" placeholder="Put project name here..." />
+        <input value={title} onChange={e => setTitle(e.target.value)} className="bg-stone-300 pt-2 pb-2 rounded-sm text-lg" type="text" placeholder="Put project name here..." />
         <label className="font-bold text-stone-600 pt-5">DESCRIPTION</label>
-        <textarea className="bg-stone-300 pt-2 pb-2 rounded-sm text-lg" type="text" />
+        <textarea value={description} onChange={e => setDescription(e.target.value)} className="bg-stone-300 pt-2 pb-2 rounded-sm text-lg" type="text" />
         <label className="font-bold text-stone-600 pt-5">DUE DATE</label>
-        <input className="bg-stone-300 pt-2 pb-2  rounded-sm text-lg active:rounded-b-lg" type="date" />
+        <input value={date} onChange={e => setDate(e.target.value)} className="bg-stone-300 pt-2 pb-2  rounded-sm text-lg active:rounded-b-lg" type="date" />
       </div>
     </>;
   } else {
@@ -53,6 +74,11 @@ export default function ProjectBody({ project }) {
 
     </div>;
   }
+
+    // Exposing the resetForm function to the parent via useImperativeHandle
+  useImperativeHandle(ref, () => ({
+    resetForm,
+  }));
 
   return (
     <div className="w-3/4">

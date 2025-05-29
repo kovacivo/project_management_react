@@ -1,7 +1,7 @@
 export default function ProjectMenu({projects}) {
 
-  const projectsActual = projects.map((proj) => <li key={proj.id} className="pt-2 pb-2">
-    <span className="text-stone-400 text-xl">{proj.name}</span></li>);
+  const projectsActual = projects.map((proj) => <li key={proj.title} className="pt-2 pb-2">
+    <span className="text-stone-400 text-xl">{proj.title}</span></li>);
 
   function handleAddProject() {
     console.log("Pressing Add Project button");
