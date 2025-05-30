@@ -1,20 +1,13 @@
 import logo from './assets/no-projects.png';
 import { useState, useImperativeHandle } from 'react';
 
+export default function ProjectBody({ project, onSubmit, ref }) {
 
-
-
-
-export default function ProjectBody({ project, projects, onSubmit, ref }) {
-
-  const [title,setTitle] = useState('');
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
 
-  console.log("ProjectBody rendered...");
-  console.log("currently {} projects there...", projects.length);
-
-   const handleFormSubmit = () => {
+  const handleFormSubmit = () => {
     if (title && description && date) {
       console.log("data is set to: {}, {} and {}", title, description, date);
       onSubmit({ title, description, date });
@@ -23,15 +16,14 @@ export default function ProjectBody({ project, projects, onSubmit, ref }) {
     }
   };
 
-   const resetForm = () => {
+  const resetForm = () => {
     setTitle('');
     setDescription('');
     setDate('');
     alert('Form has been reset!');
   };
-  
+
   function handleCreateProject() {
-    console.log("Pressing button to create new project...");
     setClickedNewProject(true);
   }
 
@@ -75,7 +67,7 @@ export default function ProjectBody({ project, projects, onSubmit, ref }) {
     </div>;
   }
 
-    // Exposing the resetForm function to the parent via useImperativeHandle
+  // Exposing the resetForm function to the parent via useImperativeHandle
   useImperativeHandle(ref, () => ({
     resetForm,
   }));

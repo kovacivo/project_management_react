@@ -1,7 +1,4 @@
-export default function ProjectMenu({projects}) {
-
-  const projectsActual = projects.map((proj) => <li key={proj.title} className="pt-2 pb-2">
-    <span className="text-stone-400 text-xl">{proj.title}</span></li>);
+export default function ProjectMenu({ projects }) {
 
   function handleAddProject() {
     console.log("Pressing Add Project button");
@@ -17,9 +14,9 @@ export default function ProjectMenu({projects}) {
 
         <section className="mt-12  mr-12">
           <ul>
-            {projectsActual}
+            {projects.map((proj, id) => <li key={id} className="pt-2 pb-2"><span className="text-stone-400 text-xl">{proj.title}</span></li>)}
           </ul>
-          
+
 
         </section>
 
